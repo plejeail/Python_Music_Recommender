@@ -22,8 +22,9 @@ Le programme doit permettre de traiter les évènements suivants :
 -Recommandation de musique (basée sur une liste de lecture composée de trois chansons) 
 
 ## Liens :
-Système de recommendation de musiques <br/>
-https://www.overleaf.com/8153868bqbyrkxdrswj#/28802840/ <br/>
+Système de recommendation de musiques (Université de New Mexico)<br/>
+https://github.com/AcidLeroy/MusicRecommender (GitHub)<br/>
+https://www.overleaf.com/8153868bqbyrkxdrswj#/28802840/  (Latex/Pdf)<br/>
 Million Song Dataset <br/>
 http://labrosa.ee.columbia.edu/millionsong/
 
