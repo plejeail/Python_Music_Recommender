@@ -26,5 +26,10 @@ Système de recommendation de musiques (Université de New Mexico)<br/>
 https://github.com/AcidLeroy/MusicRecommender (GitHub)<br/>
 https://www.overleaf.com/8153868bqbyrkxdrswj#/28802840/  (Latex/Pdf)<br/>
 Million Song Dataset <br/>
-http://labrosa.ee.columbia.edu/millionsong/
-
+http://labrosa.ee.columbia.edu/millionsong/ <br/>
+Million Song Dataset Tuto <br/>
+http://labrosa.ee.columbia.edu/millionsong/sites/default/files/tutorial1.py.txt
+Algorithme Shazam (toptal) <br/>
+https://www.toptal.com/algorithms/shazam-it-music-processing-fingerprinting-and-recognition
+Livre Python Musiques <br/>
+http://totoharyanto.staff.ipb.ac.id/files/2012/10/Building-Machine-Learning-Systems-with-Python-Richert-Coelho.pdf 
