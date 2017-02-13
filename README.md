@@ -25,8 +25,10 @@ Le programme doit permettre de traiter les évènements suivants :
 Système de recommendation de musiques (Université de New Mexico)<br/>
 https://github.com/AcidLeroy/MusicRecommender (GitHub)<br/>
 https://www.overleaf.com/8153868bqbyrkxdrswj#/28802840/  (Latex/Pdf)<br/>
-Million Song Dataset <br/>
+Million Song <br/>
 http://labrosa.ee.columbia.edu/millionsong/ <br/>
+Million Song Github <br/>
+https://github.com/tbertinmahieux/MSongsDB/blob/master/PythonSrc
 Million Song Dataset Tuto <br/>
 http://labrosa.ee.columbia.edu/millionsong/sites/default/files/tutorial1.py.txt <br/>
 Algorithme Shazam (toptal) <br/>
