@@ -1,2 +1,2 @@
-# Python_Music_Recommender
+# Music Recommender with Python
 
