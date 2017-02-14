@@ -8,8 +8,10 @@ from os import makedirs, listdir
 import shutil as sh
 import random as rnd
 
+
 directory_input = "genres/genres_converted/"
 directory_output = "genres/genres_converted/test_files/"
+
 
 def sampler(dir_in , dir_out , genres , format_file, size_test_file):
     newpath = ((dir_out))
@@ -25,6 +27,7 @@ def sampler(dir_in , dir_out , genres , format_file, size_test_file):
             #choix aleatoires des fichers par genres
             sh.copy(src = the_dir + "/" + sound , dst = newpath + sound)
 
+            
 if __name__ == "__main__":
     size_file = []
     
@@ -50,8 +53,3 @@ if __name__ == "__main__":
                      directory_output = directory_output,
                      genres = genre_list,
                      format_file  = ".wav")
-
-
- 
-
-    
