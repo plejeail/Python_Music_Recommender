@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 # Music Recommender
 # tools.convert_format
+""" this module contains function for the manipulation of audio files """
+
 
 # importation des modules
 from os import listdir, makedirs
 from pydub import AudioSegment
-
-######MUSIC CONVERSION###############################
-
-# tous les genres disponibles
-genre_list = ["blues", "classical", "country", "disco", "hiphop", "jazz",
-              "metal", "pop", "reggae", "rock"]
 
 
 def convert_format(dir_in,
                    dir_out,
                    location,
                    format_file):
+    """ convert all the audio files in the subfolders of dir_in in the 
+        chosen format and save converted file in dir_out
+    """
     for folder in location: 
        #parcours de la liste des genres
        new_path = ((dir_out + location)) 
@@ -31,12 +30,15 @@ def convert_format(dir_in,
           # stockage des sons dans le nouveau directory
           sound_file.export(new_path + "/" + name + ".wav", format=format_file)
 
+          
+if __name__ == "__main__":
+    genre_list = ["blues", "classical", "country", "disco", "hiphop", "jazz",
+                  "metal", "pop", "reggae", "rock"]
+    directory_input = "genres/genres_raw/"
+    genres = genre_list
 
-directory_input = "genres/genres_raw/"
-genres = genre_list
-
-directory_output = "genres/genres_converted/"
-convert_format(directory_input = directory_input,
-               directory_output = directory_output,
-               repositories = genre_list,
-               format_file = "wav")
+    directory_output = "genres/genres_converted/"
+    convert_format(directory_input = directory_input,
+                   directory_output = directory_output,
+                   location = genre_list,
+                   format_file = "wav")
