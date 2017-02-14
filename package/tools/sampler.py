@@ -9,10 +9,6 @@ import shutil as sh
 import random as rnd
 
 
-directory_input = "genres/genres_converted/"
-directory_output = "genres/genres_converted/test_files/"
-
-
 def sampler(dir_in , dir_out , genres , format_file, size_test_file):
     newpath = ((dir_out))
     makedirs(newpath)
@@ -29,8 +25,9 @@ def sampler(dir_in , dir_out , genres , format_file, size_test_file):
 
             
 if __name__ == "__main__":
+    directory_input = "genres/genres_converted/"
+    directory_output = "genres/genres_converted/test_files/"
     size_file = []
-    
     genre_list = ["blues", "classical", "country", "disco", "hiphop", "jazz",
               "metal", "pop", "reggae", "rock"]
 
