@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Music Recommender
 # tools.sampler
-
+""" this module contains tool functions for statistics """
 
 #importation de modules
 from os import makedirs, listdir
@@ -10,6 +10,7 @@ import random as rnd
 
 
 def sampler(dir_in , dir_out , genres , format_file, size_test_file):
+    """ sampler choose a given number of files randomly """ 
     newpath = ((dir_out))
     makedirs(newpath)
     #creation d un nouveau dossier
