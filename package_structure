@@ -4,6 +4,5 @@
   main.py
 
   # Tools
-    convert_format.py
-    sampler.py
-    
+    audio.py
+    stats.py
