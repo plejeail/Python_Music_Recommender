@@ -35,3 +35,6 @@ Algorithme Shazam (toptal) <br/>
 https://www.toptal.com/algorithms/shazam-it-music-processing-fingerprinting-and-recognition <br/>
 Livre Python Musiques <br/>
 http://totoharyanto.staff.ipb.ac.id/files/2012/10/Building-Machine-Learning-Systems-with-Python-Richert-Coelho.pdf  <br/>
+
+Librairrie d'analyse musical (le sous fichier 'beat.py' est assez intéressant)
+https://github.com/librosa/librosa/tree/master/librosa
