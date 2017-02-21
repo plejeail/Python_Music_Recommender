@@ -1,7 +1,7 @@
 
 
 #modules importation
-from fingerprints import fingerprinter
+from fingerprint import fingerprinter
 import os
 import pandas as pd
 #directory where the audios are
