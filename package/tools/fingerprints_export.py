@@ -1,13 +1,13 @@
-
-
 #modules importation
 from fingerprint import fingerprinter
 import os
 import pandas as pd
-#directory where the audios are
-path_audios = 'genres/genres_converted/test_files'
+
 
 def fingerprints_exports(path_files):
+    """
+        Create dataframe_fingerprints which contains the fingerprint of all the audio files in the given path
+    """
     list_fingerprints = []
 
     for files in os.listdir(path_files):
@@ -18,14 +18,19 @@ def fingerprints_exports(path_files):
         #sotrage as a dataframe (to ease the exportation)
     dataframe_fingerprints = pd.DataFrame(list_fingerprints)
     dataframe_fingerprints.columns = ['fingerprints']
-    
     return dataframe_fingerprints
     
 
 
 def storage_fingerprints(dataframe_fingerprints):
+    """
+        write a dataframe to csv 
+    """
     dataframe_fingerprints.to_csv('audios_fingerprints.csv' , sep = ';')
 
-    #functions calls
-fingerprints_audios = fingerprints_exports(path_audios)
-storage_fingerprints(fingerprints_audios)
+    
+if __name__ == "__main__":
+    # path of the audio files directory 
+    audiopath = 'genres/genres_converted/test_files'
+    fingerprints_audios = fingerprints_exports(path_audios)
+    storage_fingerprints(fingerprints_audios)
