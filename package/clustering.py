@@ -21,15 +21,12 @@ with open("db/h5.csv", 'r') as csvfile:
 numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
 dataset = table.select_dtypes(include=numerics)
 
-# Select Lebron James from our dataset
-selected_plajyer = dataset.loc[1]
-
 # Variables description
 dataset.describe()
 # variance(asr) = 0 and variance(energy) = 0 so we remove them
 del dataset['asr']
 del dataset['energy']
-dataset.fit_transform()
+
 
 # ?? We didn't find Nan but this seems necessary
 dataset = dataset.fillna(dataset.mean(), inplace=True)
@@ -52,6 +49,11 @@ df_scaled = preprocessing.scale(dataset)
 # lebron_distance = dfnba.apply(euclidean_distance, axis=1)
 knn = NearestNeighbors(n_neighbors=3, algorithm='ball_tree')
 knn.fit(df_scaled)
+
+# Select Lebron James from our dataset
+selected_player = dataset.loc[1]
+
+distance_columns = ['tempo','mean_section_start','mean_beats_start','mean_bars_start','mean_tatums_start','key','mode','mean_segments_loudness_start', 'mean_segments_loudness_max_time','max_segments_loudness','mean_segments_timbre','mean_segments_pitches','first_segments_start','start_of_fade_out','loudness']
 
 def euclidean_distance(row):
     """
@@ -121,4 +123,4 @@ mykmean.fit(df_scaled)
 # l'erreur d'une vie en approche
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!DANGER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
 # silhouette_score(df_scaled, mykmean.labels_) # Attention instruction merdique
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
