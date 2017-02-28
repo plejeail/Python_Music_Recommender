@@ -11,85 +11,110 @@ from itertools import cycle
 from sklearn.neighbors import NearestNeighbors
 from sklearn import preprocessing
 from sklearn.cluster import MeanShift, estimate_bandwidth, KMeans
-from sklearn.metrics import silhouette_score
 from scipy.spatial import distance
+import math
+
 
 # %% Importation and first treatments ----------------------------------------
 with open("db/h5.csv", 'r') as csvfile:
     table = pnd.DataFrame(pnd.read_csv(csvfile, sep=';'))
 
-numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
-dataset = table.select_dtypes(include=numerics)
+info = table.iloc[:, :4]
+numerics = table.iloc[:, 4:]
 
+"""
 # Variables description
-dataset.describe()
+# numerics.describe()
 # variance(asr) = 0 and variance(energy) = 0 so we remove them
-del dataset['asr']
-del dataset['energy']
-
+del numerics['danceability']
+del numerics['asr']
+del numerics['energy']
 
 # ?? We didn't find Nan but this seems necessary
-dataset = dataset.fillna(dataset.mean(), inplace=True)
+numerics = numerics.fillna(numerics.mean(), inplace=True)
 
 # Correlations between lines
-xcorr = np.corrcoef(dataset)
+xcorr = np.corrcoef(numerics)
 xcorr = xcorr[np.logical_not(np.isnan(xcorr))]
 xcorr.min()
 
 # Correlations between columns
-ycorr = np.corrcoef(dataset, rowvar=0)
+ycorr = np.corrcoef(numerics, rowvar=0)
 ycorr = ycorr[np.logical_not(np.isnan(ycorr))]
 ycorr.min()
 
 # We scale columns so they will be comparable
-df_scaled = preprocessing.scale(dataset)
+df_scaled = preprocessing.scale(numerics)
+"""
 
 # %% knn ---------------------------------------------------------------------
 # Find the distance from each player in the dataset to lebron.
 # lebron_distance = dfnba.apply(euclidean_distance, axis=1)
-knn = NearestNeighbors(n_neighbors=3, algorithm='ball_tree')
-knn.fit(df_scaled)
+# knn = NearestNeighbors(n_neighbors=3, algorithm='ball_tree')
+# knn.fit(df_scaled)
 
 # Select Lebron James from our dataset
-selected_player = dataset.loc[1]
+# track_id = .iloc[1,0]
 
-distance_columns = ['tempo','mean_section_start','mean_beats_start','mean_bars_start','mean_tatums_start','key','mode','mean_segments_loudness_start', 'mean_segments_loudness_max_time','max_segments_loudness','mean_segments_timbre','mean_segments_pitches','first_segments_start','start_of_fade_out','loudness']
 
-def euclidean_distance(row):
+def recommendation(track_id):
     """
-    A simple euclidean distance function
+    recommendation using
     """
-    inner_value = 0
-    for k in distance_columns:
-        inner_value += (row[k] - selected_player[k]) ** 2
-    return math.sqrt(inner_value)
+    # columns used for recommendation
+    distance_columns = ['tempo', 'mean_section_start', 'mean_beats_start',
+                        'mean_bars_start', 'mean_tatums_start', 'key', 'mode',
+                        'mean_segments_loudness_start',
+                        'mean_segments_loudness_max_time',
+                        'max_segments_loudness', 'mean_segments_timbre',
+                        'mean_segments_pitches', 'first_segments_start',
+                        'start_of_fade_out', 'loudness',
+                        'artist_hot', 'song_hot', 'time_signature']
 
-lebron_distance = dataset.apply(euclidean_distance, axis=1)
+    def euclidean_distance(row):
+        """
+        A simple euclidean distance function
+        """
+        inner_value = 0
+        for k in distance_columns:
+            inner_value += (row[k] - track[k]) ** 2
+        return math.sqrt(inner_value)
 
-# Select only the numeric columns from the NBA dataset
-dataset_numeric = dataset[distance_columns]
+    # Select only the numeric columns from the NBA dataset
+    dataset_numeric = numerics[distance_columns]
 
-# Normalize all of the numeric columns
-dataset_normalized = (dataset_numeric - dataset_numeric.mean()) / dataset_numeric.std()
+    # Normalize all of the numeric columns
+    df_scaled = (dataset_numeric - dataset_numeric.mean()) / dataset_numeric.std()
+    # use df_scaled
 
-# Fill in NA values in nba_normalized
-dataset_normalized.fillna(0, inplace=True)
+    # Fill in NA values in nba_normalized
+    df_scaled.fillna(0, inplace=True)
 
-# Find the normalized vector for lebron james.
-lebron_normalized = dataset_normalized[table["title"] == "b'Sincerely'"]
+    # Find the normalized vector for track.
+    track_val = df_scaled[info["track_id"] == "b'" + track_id + "'"]
 
-# Find the distance between lebron james and everyone else.
-euclidean_distances = dataset_normalized.apply(lambda row: distance.euclidean(row, lebron_normalized), axis=1)
+    # Find the distance between lebron james and everyone else.
+    euclidean_distances = df_scaled.apply(lambda row: distance.euclidean(row, track_val),
+                                                   axis=1)
 
-# Create a new dataframe with distances.
-distance_frame = pnd.DataFrame(data={"dist": euclidean_distances, "idx": euclidean_distances.index})
-distance_frame.sort("dist", inplace=True)
-# Find the most similar player to lebron (the lowest distance to lebron is lebron, the second smallest is the most similar non-lebron player)
-second_smallest = distance_frame.iloc[1]["idx"]
-#most_similar_to_lebron = dataset.loc[int(second_smallest)]["title"]
+    # Create a new dataframe with distances.
+    distance_frame = pnd.DataFrame(data={"dist": euclidean_distances,
+                                         "idx": euclidean_distances.index})
+    distance_frame.sort("dist", inplace=True)
+    # Find the most similar player to track (the lowest distance to track is
+    # lebron, the second smallest is the most similar non-lebron player)
+    # 0 is the music
 
+    first = distance_frame.iloc[1]["idx"]
+    second = distance_frame.iloc[2]["idx"]
+    third = distance_frame.iloc[3]["idx"]
+    return (info.loc[int(first)],
+            info.loc[int(second)],
+            info.loc[int(third)])
 
-# %% MeanShift ---------------------------------------------------------------
+"""
+obsolete code
+#  MeanShift ---------------------------------------------------------------
 # The following bandwidth can be automatically detected using
 bandwidth = estimate_bandwidth(df_scaled, quantile=0.2, n_samples=500)
 
@@ -115,12 +140,12 @@ for k, col in zip(range(n_clusters_), colors):
              markeredgecolor='k', markersize=14)
 plt.title('Estimated number of clusters: %d' % n_clusters_)
 plt.show()
-# le plot est chelou mais il est fait sur deux variable et y en a 18
+# le plot est "special" mais il est fait sur deux variable et y en a 18
 
-# %% kmeans, une methode brutale ----------------------------------------------
+#  kmeans, une methode brutale ----------------------------------------------
 mykmean = KMeans(n_clusters=2, random_state=0)
 mykmean.fit(df_scaled)
-# l'erreur d'une vie en approche
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!DANGER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
 # silhouette_score(df_scaled, mykmean.labels_) # Attention instruction merdique
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+"""
