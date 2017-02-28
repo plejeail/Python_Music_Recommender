@@ -71,7 +71,7 @@ def recommendation(track_id):
                         'start_of_fade_out', 'loudness',
                         'artist_hot', 'song_hot', 'time_signature']
 
-    def euclidean_distance(row):
+    def euclidean_distance(row, track):
         """
         A simple euclidean distance function
         """
@@ -95,7 +95,7 @@ def recommendation(track_id):
 
     # Find the distance between lebron james and everyone else.
     euclidean_distances = df_scaled.apply(lambda row: distance.euclidean(row, track_val),
-                                                   axis=1)
+                                          axis=1)
 
     # Create a new dataframe with distances.
     distance_frame = pnd.DataFrame(data={"dist": euclidean_distances,
