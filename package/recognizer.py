@@ -56,10 +56,10 @@ def get_metadata(file):
 
 # %% Test
 if __name__ == "__main__":
-    audiofile = "/home/gevisk/Programs/Python/Python_Music_Recommender/recognition/wav/Gold Panda - Fifth Ave.mp3.wav"
-    folder = "/home/gevisk/Programs/Python/Python_Music_Recommender/recognition/wav/"
+    audiofile = "/home/gevisk/Programs/Python/Python_Music_Recommender/package/wav/Gold Panda - Fifth Ave.mp3.wav"
+    folder = "/home/gevisk/Programs/Python/Python_Music_Recommender/package/wav"
 
-    get_track(audiofile)
+    print(get_track(audiofile))
     trackid = get_track(audiofile)["track_id"]  # get id of a track
     get_folder_id(folder)  # get the id for all files of a folder
-    get_metadata(audiofile)
+    # get_metadata(audiofile)

@@ -5,7 +5,7 @@ This module is used for generation of the recognition database associating
 the fingerprint of an audio file with the id of the corresponding track
 """
 import fingerprinter as fp
-import dbtools as dbtools
+import m2r.dbtools as dbtools
 import os
 
 DB_FOLDER = "db/"

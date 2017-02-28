@@ -379,7 +379,9 @@ with open('db/h5.csv', 'w', newline='') as csvfile:
                             quotechar='"',
                             quoting=csv.QUOTE_MINIMAL)
 
-    spamwriter.writerow(['title', 'release', 'year', 'tempo', 'asr',
+    spamwriter.writerow(['track_id', 'mbtags',
+                         'title', 'artist_name', 'release', 'artist_hot', 'song_hot',
+                         'danceability', 'year', 'tempo', 'time_signature', 'asr',
                          'mean_section_start', 'mean_beats_start', 'mean_bars_start',
                          'mean_tatums_start', 'key', 'mode', 'mean_segments_loudness_start',
                          'mean_segments_loudness_max_time', 'max_segments_loudness',
@@ -394,8 +396,16 @@ with open('db/h5.csv', 'w', newline='') as csvfile:
             i = i + 1
             a = myh5.segments_start(0)[i]
 
-        row = [myh5.title(0),
-               myh5.release(0), myh5.year(0), myh5.tempo(0),
+        if len(myh5.artist_mbtags(0)) > 0:
+            tag = myh5.artist_mbtags(0)[0]
+        else:
+            tag = "NA"
+
+        row = [myh5.track_id(0), tag,
+               myh5.title(0), myh5.artist_name(0), myh5.release(0),
+               myh5.artist_hot(0), myh5.song_hot(0), myh5.danceability(0),
+               myh5.year(0), myh5.tempo(0),
+               myh5.time_signature(0),
                myh5.analysis_sample_rate(0), mean(myh5.sections_start(0)),
                mean(myh5.beats_start(0)), mean(myh5.bars_start(0)),
                mean(myh5.tatums_start(0)), myh5.key(0), myh5.mode(0),

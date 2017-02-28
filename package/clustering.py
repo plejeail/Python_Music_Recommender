@@ -5,22 +5,20 @@ This module provide a cluster of the musics with features given by the h5 files
 from Million Song Database
 """
 import pandas as pnd
-import numpy as np
 import matplotlib.pyplot as plt
-from itertools import cycle
-from sklearn.neighbors import NearestNeighbors
-from sklearn import preprocessing
-from sklearn.cluster import MeanShift, estimate_bandwidth, KMeans
+import matplotlib
 from scipy.spatial import distance
 import math
 
+
+matplotlib.style.use('ggplot')
 
 # %% Importation and first treatments ----------------------------------------
 with open("db/h5.csv", 'r') as csvfile:
     table = pnd.DataFrame(pnd.read_csv(csvfile, sep=';'))
 
-info = table.iloc[:, :4]
-numerics = table.iloc[:, 4:]
+info = table.iloc[:, :5]
+numerics = table.iloc[:, 5:]
 
 """
 # Variables description
@@ -104,13 +102,21 @@ def recommendation(track_id):
     # Find the most similar player to track (the lowest distance to track is
     # lebron, the second smallest is the most similar non-lebron player)
     # 0 is the music
-
-    first = distance_frame.iloc[1]["idx"]
-    second = distance_frame.iloc[2]["idx"]
-    third = distance_frame.iloc[3]["idx"]
-    return (info.loc[int(first)],
-            info.loc[int(second)],
-            info.loc[int(third)])
+    first = distance_frame.iloc[1]
+    second = distance_frame.iloc[2]
+    third = distance_frame.iloc[3]
+    dist_values = pnd.DataFrame(data={"id": [1, 2, 3],
+                                      "dist": [first["dist"], second["dist"],
+                                               third["dist"]]})
+    dist_values.plot(kind="scatter")
+    vecvec.to_frame()
+    vec.append(second)
+    vec.append(third)
+    vec.scatter(ser.index, ser)
+    vec.show()
+    return (info.loc[int(first["idx"])],
+            info.loc[int(second["idx"])],
+            info.loc[int(third["idx"])])
 
 """
 obsolete code

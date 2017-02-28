@@ -99,7 +99,7 @@ class Dbtracks(Dbread):
 # Example
 if __name__ == "__main__":
     DB_FOLDER = "db/"
-    DBFILE = DB_FOLDER + 'subset_track_metadata.db'
+    DBFILE = DB_FOLDER + 'track_metadata.db'
     sqldb = Dbtracks(DBFILE)
     print("#-------------------------------------------------------#")
     print("#          database : " + str(sqldb.file))
