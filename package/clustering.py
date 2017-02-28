@@ -109,11 +109,7 @@ def recommendation(track_id):
                                       "dist": [first["dist"], second["dist"],
                                                third["dist"]]})
     dist_values.plot(kind="scatter")
-    vecvec.to_frame()
-    vec.append(second)
-    vec.append(third)
-    vec.scatter(ser.index, ser)
-    vec.show()
+
     return (info.loc[int(first["idx"])],
             info.loc[int(second["idx"])],
             info.loc[int(third["idx"])])
